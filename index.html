@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spanish Verb Test</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="questions.js"></script>
+  <script defer src="test.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Spanish Verb Test</h1>
+      <p>Is the bold verb phrase correct in this sentence? Choose True or False, then reveal the explanation and English translation.</p>
+    </header>
+    <div class="status">
+      <span id="position"></span>
+      <span id="score"></span>
+    </div>
+    <progress id="progress" max="100" value="0" aria-label="Questions answered"></progress>
+    <section id="card" aria-label="Current question">
+      <h2 id="sentence" lang="es" tabindex="-1"></h2>
+      <div id="choices" class="choices">
+        <button id="true" type="button">True</button>
+        <button id="false" type="button">False</button>
+      </div>
+      <div id="feedback" class="feedback" aria-live="polite" aria-atomic="true">
+        <p id="result" hidden></p>
+        <div id="explanation" hidden>
+          <p id="correction" lang="es"></p>
+          <p id="reason"></p>
+        </div>
+        <p id="translation" hidden></p>
+      </div>
+      <button id="advance" class="primary" type="button" hidden></button>
+    </section>
+  </main>
+</body>
+</html>
