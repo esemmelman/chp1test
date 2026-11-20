@@ -82,7 +82,8 @@ function answer(choice) {
   stage = "next";
   advance.textContent = index + 1 === questions.length ? "See final score" : "Next question";
   advance.hidden = false;
-  advance.focus();
+  result.focus({ preventScroll: true });
+  result.scrollIntoView({ block: "start" });
 }
 
 get("true").addEventListener("click", () => answer(true));
