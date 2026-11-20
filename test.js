@@ -73,7 +73,9 @@ function answer(choice) {
   result.hidden = false;
   get("choices").hidden = true;
   if (!right) {
-    get("correction").textContent = question.before + question.correct + question.after;
+    const correctedVerb = document.createElement("strong");
+    correctedVerb.textContent = question.correct;
+    get("correction").replaceChildren(question.before, correctedVerb, question.after);
     get("reason").textContent = question.reason;
     get("explanation").hidden = false;
     translation.textContent = question.english;
