@@ -36,4 +36,5 @@ button:hover { background: #dcf4e9; }
 .right { color: #075e50; }
 .wrong { color: #a0291d; }
 #correction, #translation { font-weight: 650; }
-#advance { margin-top: .8rem; }
+.actions { display: flex; flex-wrap: wrap; column-gap: .75rem; }
+.actions button { margin-top: .8rem; }

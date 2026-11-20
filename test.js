@@ -1,6 +1,8 @@
 const get = (id) => document.getElementById(id);
 const sentence = get("sentence");
 const advance = get("advance");
+const english = get("english");
+const translation = get("translation");
 let questions;
 let index;
 let correctCount;
@@ -39,7 +41,9 @@ function showQuestion(focus) {
   sentence.replaceChildren(question.before, verb, question.after);
   get("position").textContent = `Question ${index + 1} of ${questions.length}`;
   get("choices").hidden = false;
-  for (const id of ["result", "explanation", "translation", "advance"]) get(id).hidden = true;
+  for (const id of ["result", "explanation", "translation", "english", "advance"]) get(id).hidden = true;
+  english.textContent = "Show English";
+  english.setAttribute("aria-expanded", "false");
   stage = "answer";
   if (focus) sentence.focus();
 }
@@ -59,7 +63,8 @@ function start(focus = false) {
 
 function answer(choice) {
   if (stage !== "answer") return;
-  const right = choice === questions[index].isTrue;
+  const question = questions[index];
+  const right = choice === question.isTrue;
   if (right) correctCount++;
   updateScore(index + 1);
   const result = get("result");
@@ -67,30 +72,28 @@ function answer(choice) {
   result.textContent = right ? "Right!" : "Wrong.";
   result.hidden = false;
   get("choices").hidden = true;
-  stage = "explain";
-  advance.textContent = "Show explanation";
+  if (!right) {
+    get("correction").textContent = question.before + question.correct + question.after;
+    get("reason").textContent = question.reason;
+    get("explanation").hidden = false;
+    translation.textContent = question.english;
+    english.hidden = false;
+  }
+  stage = "next";
+  advance.textContent = index + 1 === questions.length ? "See final score" : "Next question";
   advance.hidden = false;
   advance.focus();
 }
 
 get("true").addEventListener("click", () => answer(true));
 get("false").addEventListener("click", () => answer(false));
+english.addEventListener("click", () => {
+  translation.hidden = !translation.hidden;
+  english.textContent = translation.hidden ? "Show English" : "Hide English";
+  english.setAttribute("aria-expanded", String(!translation.hidden));
+});
 advance.addEventListener("click", () => {
-  const question = questions[index];
   switch (stage) {
-    case "explain":
-      get("correction").textContent = question.before + question.correct + question.after;
-      get("reason").textContent = question.reason;
-      get("explanation").hidden = false;
-      advance.textContent = "Show English";
-      stage = "translate";
-      break;
-    case "translate":
-      get("translation").textContent = question.english;
-      get("translation").hidden = false;
-      advance.textContent = index + 1 === questions.length ? "See final score" : "Next question";
-      stage = "next";
-      break;
     case "next":
       index++;
       if (index < questions.length) {
@@ -103,7 +106,8 @@ advance.addEventListener("click", () => {
       get("result").className = "";
       get("result").textContent = `You got ${correctCount} out of ${questions.length} correct.`;
       get("explanation").hidden = true;
-      get("translation").hidden = true;
+      translation.hidden = true;
+      english.hidden = true;
       advance.textContent = "Start a new test";
       stage = "restart";
       sentence.focus();

@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spanish Verb Test</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <script defer src="questions.js"></script>
-  <script defer src="test.js"></script>
+  <script defer src="test.js?v=2"></script>
 </head>
 <body>
   <main>
     <header>
       <h1>Spanish Verb Test</h1>
-      <p>Is the bold verb phrase correct in this sentence? Choose True or False, then reveal the explanation and English translation.</p>
+      <p>Is the bold verb phrase correct in this sentence? Choose True or False. If you miss a question, you’ll see an explanation and can reveal the English translation.</p>
     </header>
     <div class="status">
       <span id="position"></span>
@@ -33,7 +33,10 @@
         </div>
         <p id="translation" hidden></p>
       </div>
-      <button id="advance" class="primary" type="button" hidden></button>
+      <div class="actions">
+        <button id="english" type="button" aria-controls="translation" aria-expanded="false" hidden>Show English</button>
+        <button id="advance" class="primary" type="button" hidden></button>
+      </div>
     </section>
   </main>
 </body>
